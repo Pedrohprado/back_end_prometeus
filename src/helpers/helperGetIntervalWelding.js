@@ -66,7 +66,7 @@ function sliceSquadWeldings(data) {
     delete item.amperagem;
   });
 
-  console.log(result);
+  return result;
 }
 
 module.exports = {

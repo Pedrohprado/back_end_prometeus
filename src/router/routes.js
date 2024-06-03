@@ -14,7 +14,7 @@ const apiRouter = express.Router();
 //rotas para verificar soldas de cada processo
 apiRouter.get('/weldings/:id/:first/:last', findWelding);
 apiRouter.get('/specific/:id/:bead', findWeldinBead);
-apiRouter.get('/prometeus/weldings/:id', listSquadWeldin);
+apiRouter.get('/prometeus/weldings/:id/:page/:pageSize', listSquadWeldin);
 
 //rotas para verificar e criar novos processos
 apiRouter.post('/newprocess', createdNewProcess);

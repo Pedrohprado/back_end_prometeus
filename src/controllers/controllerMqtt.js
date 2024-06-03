@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 const client = mqtt.connect(process.env.MQTT_CONNECT);
 
 const info = {};
+
 let currentId01 = uuiddv4();
 let currentId02 = uuiddv4();
 
@@ -54,7 +55,6 @@ client.on('message', async (topic, payload) => {
     hoursOff < 17
   ) {
     if (topics.length >= 2) {
-      console.log('teste');
       if (topic === topics[0]) info.prometeus01 = payload.toString();
       if (topic === topics[1]) info.prometeus02 = payload.toString();
 
@@ -74,7 +74,7 @@ client.on('message', async (topic, payload) => {
       list01 = [];
       list02 = [];
 
-      // console.log(info);
+      console.log(mediaprometeus01, mediaprometeus02);
 
       if (prismaPrometeus01 && mediaprometeus01 >= 70) {
         console.log(`prometeus 01 ${mediaprometeus01}, ${second}`);
@@ -106,6 +106,7 @@ client.on('message', async (topic, payload) => {
       mediaprometeus01 = 0;
       mediaprometeus02 = 0;
     } else {
+      //I can kill this else because i nothing use one prometeus
       if (topic === topics[0]) info.prometeus01 = payload.toString();
       info.prometeus01 = +info.prometeus01;
 

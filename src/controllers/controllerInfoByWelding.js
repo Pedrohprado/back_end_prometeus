@@ -9,6 +9,12 @@ const prisma = new PrismaClient();
 const listSquadWeldin = async (req, res) => {
   try {
     const { id } = req.params;
+    const page = parseInt(req.params.page) || 1;
+    const pageSize = parseInt(req.params.pageSize) || 10;
+
+    const startIndex = (page - 1) * pageSize;
+    const endIndex = page * pageSize;
+
     const prometeus = await prisma.prometeus.findUnique({
       where: { id },
     });
@@ -22,8 +28,12 @@ const listSquadWeldin = async (req, res) => {
           createdAt: 'asc',
         },
       });
-      sliceSquadWeldings(specific);
-      res.status(200).json(specific);
+
+      let result = sliceSquadWeldings(specific);
+      result = result.reverse();
+      const paginatedData = result.slice(startIndex, endIndex);
+      console.log(paginatedData.length);
+      res.status(200).json(paginatedData);
     }
   } catch (error) {
     console.log(error);
