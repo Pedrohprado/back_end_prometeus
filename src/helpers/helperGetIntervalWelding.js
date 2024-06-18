@@ -33,12 +33,9 @@ function sliceSquadWeldings(data) {
     const arcAberto = item.tempoFinal - item.tempoInicial;
     const second = Math.floor(arcAberto / 1000);
 
-    if (second <= 59) {
-      item.tempoDeArc = second;
-    } else {
-      item.tempoDeArc = +(second / 60).toFixed(2);
-    }
-    item.tempoDeArc1 = item.amperagem.length;
+    if (second) item.tempoDeArc = second;
+
+    item.arrayLength = item.amperagem.length;
 
     if (item.amperagem.length <= 2) {
       item.tipo = 'ponto de solda';

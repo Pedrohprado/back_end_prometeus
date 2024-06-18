@@ -8,6 +8,7 @@ const {
   findWeldinBead,
   listSquadWeldin,
 } = require('../controllers/controllerInfoByWelding');
+const { getCicleWorkOrStop } = require('../controllers/controllerServiceCycle');
 
 const apiRouter = express.Router();
 
@@ -19,5 +20,8 @@ apiRouter.get('/prometeus/weldings/:id/:page/:pageSize', listSquadWeldin);
 //rotas para verificar e criar novos processos
 apiRouter.post('/newprocess', createdNewProcess);
 apiRouter.get('/allprocess', getAllProcess);
+
+//rotas para verificar o controle de ciclo de serviço de cada prometeus
+apiRouter.get('/servicecycle/:id/:first/:last', getCicleWorkOrStop);
 
 module.exports = { apiRouter };

@@ -4,7 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "mqtt": "node --watch src/controllers/controllerMqtt.js",
+    "mqtt": "node --watch src/controllers/mqtt/controllerMqtt.js",
+    "mqtt2": "node --watch src/controllers/mqtt/controllerMqtt02.js",
+    "mqtt3": "node --watch src/controllers/mqtt/controllerMqtt03.js",
+
     "serve": "node --watch src/server.js"
   },
   "dependencies": {

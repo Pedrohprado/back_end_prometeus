@@ -1,0 +1,77 @@
+function someMinutesWorkorStopping(data) {
+  const groupByDate = {};
+  const secondsToWorkInOneDay = 8 * 3600 + 56 * 60;
+  const secondsEffectiveCapacity = 7 * 3600 + 56 * 60;
+
+  data.forEach((item) => {
+    const date = new Date(item.tempoInicial).toISOString().split('T')[0];
+
+    if (!groupByDate[date]) {
+      groupByDate[date] = {
+        data: date,
+        quantidadeDeCordoesDeSolda: 0,
+        tempoTrabalhado: 0,
+      };
+    }
+
+    if (item.tempoDeArc) {
+      groupByDate[date].tempoTrabalhado += item.tempoDeArc;
+    } else {
+      groupByDate[date].tempoTrabalhado += 0;
+    }
+    groupByDate[date].quantidadeDeCordoesDeSolda++;
+  });
+
+  const array = Object.values(groupByDate);
+
+  array.forEach((item) => {
+    item.porcentagemTrabalhando = +(
+      (item.tempoTrabalhado * 100) /
+      secondsToWorkInOneDay
+    ).toFixed(2);
+    item.tempoParado = secondsToWorkInOneDay - item.tempoTrabalhado;
+
+    item.porcentagemParado = +(
+      (item.tempoParado * 100) /
+      secondsToWorkInOneDay
+    ).toFixed(2);
+
+    item.porcentagemCapacidadeEfetiva = +(
+      (item.tempoTrabalhado * 100) /
+      secondsEffectiveCapacity
+    ).toFixed(2);
+  });
+
+  const total = {
+    tempoTrabalhado: 0,
+    tempoParado: 0,
+    quantidadeDeSolda: 0,
+  };
+  array.forEach((item) => {
+    total.tempoTrabalhado += item.tempoTrabalhado;
+    total.tempoParado += item.tempoParado;
+    total.quantidadeDeSolda += item.quantidadeDeCordoesDeSolda;
+    total.porcentagemTrabalhando = +(
+      (total.tempoTrabalhado * 100) /
+      (secondsToWorkInOneDay * array.length)
+    ).toFixed(2);
+    total.porcentagemParado = +(
+      (total.tempoParado * 100) /
+      (secondsToWorkInOneDay * array.length)
+    ).toFixed(2);
+    total.porcentagemCapacidadeEfetiva = +(
+      (total.tempoTrabalhado * 100) /
+      (secondsEffectiveCapacity * array.length)
+    ).toFixed(2);
+    // console.log(item.tempoTrabalhado, item.tempoParado);
+  });
+
+  const geralValues = [total];
+
+  console.log([array, geralValues]);
+  return [array, geralValues];
+}
+
+module.exports = {
+  someMinutesWorkorStopping,
+};
