@@ -7,8 +7,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-//i need add what is prometeus
-
 model Prometeus {
     id              String    @id @default(uuid())
     prometeusCode   String
@@ -21,6 +19,7 @@ model Prometeus {
     velocidadeArame String
     Welding         Welding[]
     createdAt       DateTime  @default(now())
+    Status          Status[]
 }
 
 model Welding {
@@ -30,4 +29,14 @@ model Welding {
     createdAt DateTime
     weldingId String
     prometeus Prometeus @relation(fields: [weldingId], references: [id])
+}
+
+model Status {
+    id          String    @id @default(uuid())
+    status      String
+    tempo       Int
+    prometeusId String
+    createdAt   DateTime  @default(now())
+    updateAt    DateTime  @updatedAt
+    prometeus   Prometeus @relation(fields: [prometeusId], references: [id])
 }

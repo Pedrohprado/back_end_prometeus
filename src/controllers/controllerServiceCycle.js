@@ -3,6 +3,7 @@ const {
   getIntervalWelding,
   sliceSquadWeldings,
 } = require('../helpers/helperGetIntervalWelding');
+
 const {
   someMinutesWorkorStopping,
 } = require('../helpers/helperCountServiceCycle');

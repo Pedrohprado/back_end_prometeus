@@ -63,7 +63,6 @@ function someMinutesWorkorStopping(data) {
       (total.tempoTrabalhado * 100) /
       (secondsEffectiveCapacity * array.length)
     ).toFixed(2);
-    // console.log(item.tempoTrabalhado, item.tempoParado);
   });
 
   const geralValues = [total];

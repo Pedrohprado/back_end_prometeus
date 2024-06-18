@@ -19,6 +19,10 @@ client.on('connect', async () => {
   client.subscribe(topics);
 });
 
+let i = 0;
+let status;
+let tempofun;
+
 client.on('message', async (topic, payload) => {
   const seconds = new Date().getSeconds();
   const sensorId = topic;
@@ -40,6 +44,7 @@ async function sendData(sensorDataArrays, sensorId) {
   const sensorMedia =
     sensorDataArrays[sensorId].reduce((acc, item) => acc + item, 0) /
     sensorDataArrays[sensorId].length;
+  i++;
 
   console.log(sensorId, sensorMedia, new Date().getSeconds());
 
@@ -52,8 +57,26 @@ async function sendData(sensorDataArrays, sensorId) {
         weldingId: prismaPrometeus.id,
       },
     });
+    status = 'trabalhando';
+    tempofun += 1;
   } else {
     currentID = uuiddv4();
+    status = 'parado';
+    tempofun = 0;
+  }
+
+  //essa parte do codigo tem a finalidade de mostrar o status de funcionamento do prometeus, e quanto tempo ele está
+  //funcioando ou não
+  if (i === 5) {
+    const statusWelding = await prisma.status.update({
+      where: {
+        prometeusId: prismaPrometeus.id,
+      },
+      data: {
+        status: status,
+        tempo: tempofun,
+      },
+    });
   }
 }
 
