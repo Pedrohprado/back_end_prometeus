@@ -1,19 +1,27 @@
 const express = require('express');
 const cors = require('cors');
 const { apiRouter } = require('./router/routes');
+const { initializeWebSocket } = require('./services/websocketService');
+const { runAll } = require('./services/sendWebsocketInfo');
 
-const server = express();
+const app = express();
 
-server.use(cors());
-server.use(express.json());
-server.use(express.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-server.use('/thunder/api', apiRouter);
+app.use('/thunder/api', apiRouter);
 
-server.use((req, res) => {
+app.use((req, res) => {
   res.status(404).json({ error: 'endpoint not fould' });
 });
 
-server.listen(8080, () => {
+const teste = app.listen(8080, '172.31.98.228', () => {
   console.log('running!');
 });
+
+initializeWebSocket(teste);
+
+setInterval(() => {
+  runAll();
+}, 2000);
