@@ -6,6 +6,47 @@ const {
 
 const prisma = new PrismaClient();
 
+const lastWeldBeadById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (id) {
+      const prometeus = await prisma.prometeus.findUnique({
+        where: { id },
+      });
+
+      if (prometeus) {
+        const specific = await prisma.welding.findFirst({
+          where: {
+            weldingId: prometeus.id,
+          },
+          orderBy: {
+            createdAt: 'asc',
+          },
+        });
+
+        if (specific) {
+          const beadweld = await prisma.welding.findMany({
+            where: {
+              capture: specific.capture,
+            },
+            orderBy: {
+              createdAt: 'desc',
+            },
+          });
+
+          res.status(200).json(beadweld);
+        }
+      }
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      error: 'erro interno no servidor',
+    });
+  }
+};
+
 const listSquadWeldin = async (req, res) => {
   try {
     const { id } = req.params;
@@ -100,6 +141,7 @@ const findWelding = async (req, res) => {
 };
 
 module.exports = {
+  lastWeldBeadById,
   listSquadWeldin,
   findWeldinBead,
   findWelding,

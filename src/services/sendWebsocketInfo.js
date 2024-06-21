@@ -80,8 +80,7 @@ async function sendStatusPrometeus01() {
   }
   console.log(constAcumulate01);
 
-  if (constAcumulate01 === 60)
-    enviaEmail('Eric, Robô 01 parado mais de 1 minuto!');
+  // if (constAcumulate01 === 60) enviaEmail('Eric, Robô 01 parado mais de 1 minuto!');
 }
 
 async function sendInfoPrometeus02() {

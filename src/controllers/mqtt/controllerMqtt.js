@@ -3,7 +3,7 @@ const { PrismaClient } = require('@prisma/client');
 const { v4: uuiddv4 } = require('uuid');
 const prisma = new PrismaClient();
 
-const mqttclient = mqtt.connect(process.env.MQTT_CONNECT);
+const client = mqtt.connect(process.env.MQTT_CONNECT);
 
 const topics = ['prometeusNewSensorId01'];
 
@@ -14,12 +14,12 @@ const sensorDataArrays = {
 let currentID = uuiddv4();
 let prismaPrometeus;
 
-mqttclient.on('connect', async () => {
+client.on('connect', async () => {
   await loadPrometeusData();
-  mqttclient.subscribe(topics);
+  client.subscribe(topics);
 });
 
-mqttclient.on('message', async (topic, payload) => {
+client.on('message', async (topic, payload) => {
   const seconds = new Date().getSeconds();
   const sensorId = topic;
 
@@ -31,7 +31,7 @@ mqttclient.on('message', async (topic, payload) => {
     }
   }
 
-  await sendData(sensorDataArrays, sensorId);
+  sendData(sensorDataArrays, sensorId);
 
   sensorDataArrays[sensorId] = [];
 });
