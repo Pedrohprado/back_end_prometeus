@@ -22,7 +22,10 @@ apiRouter.get('/allprocess', getAllProcess);
 apiRouter.get('/weldings/:id/:first/:last', findWelding);
 apiRouter.get('/specific/:id/:bead', findWeldinBead);
 apiRouter.get('/prometeus/weldings/:id/:page/:pageSize', listSquadWeldin);
+//this route get a last bead by id, use for graph home
 apiRouter.get('/lastweldbead/:id', lastWeldBeadById);
+
+//this route get a lasts process i use for table in homepage
 apiRouter.get('/lastprocessweld/', findLastOperations);
 
 //rotas para verificar o controle de ciclo de serviço de cada prometeus

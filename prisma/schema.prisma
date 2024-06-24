@@ -17,6 +17,8 @@ model Prometeus {
     vazaoDoGas      String
     diametroArame   String
     velocidadeArame String
+    localizationRow Int?
+    localizationCol Int?
     Welding         Welding[]
     createdAt       DateTime  @default(now())
     Status          Status[]
