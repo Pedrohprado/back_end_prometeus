@@ -2,6 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const {
   getIntervalWelding,
   sliceSquadWeldings,
+  sliceLastProcess,
 } = require('../helpers/helperGetIntervalWelding');
 
 const prisma = new PrismaClient();
@@ -21,9 +22,11 @@ const lastWeldBeadById = async (req, res) => {
             weldingId: prometeus.id,
           },
           orderBy: {
-            createdAt: 'asc',
+            createdAt: 'desc',
           },
         });
+
+        console.log(specific);
 
         if (specific) {
           const beadweld = await prisma.welding.findMany({
@@ -35,7 +38,9 @@ const lastWeldBeadById = async (req, res) => {
             },
           });
 
-          res.status(200).json(beadweld);
+          console.log(beadweld);
+
+          res.status(200).json(beadweld.reverse());
         }
       }
     }
@@ -140,7 +145,39 @@ const findWelding = async (req, res) => {
   }
 };
 
+const findLastOperations = async (req, res) => {
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const datas = await prisma.welding.findMany({
+      where: {
+        createdAt: {
+          gte: today,
+        },
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+      include: {
+        prometeus: {
+          select: {
+            prometeusCode: true,
+          },
+        },
+      },
+    });
+    const teste = sliceLastProcess(datas);
+    res.json(teste.reverse());
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      error: 'erro interno no servidor',
+    });
+  }
+};
+
 module.exports = {
+  findLastOperations,
   lastWeldBeadById,
   listSquadWeldin,
   findWeldinBead,

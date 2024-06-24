@@ -35,12 +35,29 @@ let constAcumulate03 = 0;
 let constAcumulate04 = 0;
 let constAcumulate05 = 0;
 
-let statusPrometeus = {
-  prometeus01: 'parado',
-  prometeus02: 'parado',
-  prometeus03: 'parado',
-  prometeus04: 'parado',
-  prometeus05: 'parado',
+let statusPrometus01 = {
+  prometeus: 'prometeus01',
+  status: 'parado',
+};
+
+let statusPrometus02 = {
+  prometeus: 'prometeus02',
+  status: 'parado',
+};
+
+let statusPrometus03 = {
+  prometeus: 'prometeus03',
+  status: 'parado',
+};
+
+let statusPrometus04 = {
+  prometeus: 'prometeus04',
+  status: 'parado',
+};
+
+let statusPrometus05 = {
+  prometeus: 'prometeus05',
+  status: 'parado',
 };
 
 async function sendStatusPrometeus01() {
@@ -60,21 +77,21 @@ async function sendStatusPrometeus01() {
 
   if (minutes === minutesLastWelding || minutes === minutesLastWelding + 1) {
     if (seconds === secondsLastWelding) {
-      statusPrometeus.prometeus01 = 'funcionando';
+      statusPrometus01.status = 'funcionando';
       constAcumulate01 = 0;
     } else {
       if (Math.abs(seconds - secondsLastWelding) <= 6) {
-        statusPrometeus.prometeus01 = 'funcionando';
+        statusPrometus01.status = 'funcionando';
 
         constAcumulate01 = 0;
       } else {
-        statusPrometeus.prometeus01 = 'parado';
+        statusPrometus01.status = 'parado';
 
         constAcumulate01++;
       }
     }
   } else {
-    statusPrometeus.prometeus01 = 'parado';
+    statusPrometus01.status = 'parado';
 
     constAcumulate01++;
   }
@@ -100,21 +117,58 @@ async function sendInfoPrometeus02() {
 
   if (minutes === minutesLastWelding || minutes === minutesLastWelding + 1) {
     if (seconds === secondsLastWelding) {
-      statusPrometeus.prometeus02 = 'funcionando';
+      statusPrometus02.status = 'funcionando';
       constAcumulate02 = 0;
     } else {
-      if (Math.abs(seconds - secondsLastWelding) <= 6) {
-        statusPrometeus.prometeus02 = 'funcionando';
+      if (Math.abs(seconds - secondsLastWelding) <= 10) {
+        statusPrometus02.status = 'funcionando';
 
         constAcumulate02 = 0;
       } else {
-        statusPrometeus.prometeus02 = 'parado';
+        statusPrometus02.status = 'parado';
 
         constAcumulate02++;
       }
     }
   } else {
-    statusPrometeus.prometeus02 = 'parado';
+    statusPrometus02.status = 'parado';
+
+    constAcumulate02++;
+  }
+}
+
+async function sendInfoPrometeus03() {
+  const dateLastWelding = await prisma.welding.findFirst({
+    where: {
+      weldingId: '58fa032d-72db-4211-8b00-791ea475a0a9',
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+  const seconds = new Date().getSeconds();
+  const minutes = new Date().getMinutes();
+
+  const minutesLastWelding = dateLastWelding.createdAt.getMinutes();
+  const secondsLastWelding = dateLastWelding.createdAt.getSeconds();
+
+  if (minutes === minutesLastWelding || minutes === minutesLastWelding + 1) {
+    if (seconds === secondsLastWelding) {
+      statusPrometus03.status = 'funcionando';
+      constAcumulate02 = 0;
+    } else {
+      if (Math.abs(seconds - secondsLastWelding) <= 10) {
+        statusPrometus03.status = 'funcionando';
+
+        constAcumulate02 = 0;
+      } else {
+        statusPrometus03.status = 'parado';
+
+        constAcumulate02++;
+      }
+    }
+  } else {
+    statusPrometus03.status = 'parado';
 
     constAcumulate02++;
   }
@@ -123,12 +177,21 @@ async function sendInfoPrometeus02() {
 function runAll() {
   sendStatusPrometeus01();
   sendInfoPrometeus02();
+  sendInfoPrometeus03();
 
-  broadcastMessage(statusPrometeus);
-  console.log(statusPrometeus);
+  let status = [];
+  status.push(
+    statusPrometus01,
+    statusPrometus02,
+    statusPrometus03,
+    statusPrometus04,
+    statusPrometus05
+  );
+
+  broadcastMessage(status);
+  console.log(status);
 }
 
 module.exports = {
   runAll,
-  //   sendInfoPrometeus02
 };
