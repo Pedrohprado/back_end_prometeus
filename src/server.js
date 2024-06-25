@@ -22,6 +22,7 @@ const teste = app.listen(8080, '172.31.98.228', () => {
 
 initializeWebSocket(teste);
 
-// setInterval(() => {
-//   runAll();
-// }, 2000);
+// return this fucntion when prometeus have datas
+setInterval(() => {
+  runAll();
+}, 2000);

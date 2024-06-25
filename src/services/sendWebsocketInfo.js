@@ -72,6 +72,10 @@ async function sendStatusPrometeus01() {
   const seconds = new Date().getSeconds();
   const minutes = new Date().getMinutes();
 
+  if (!dateLastWelding) {
+    return (statusPrometus01.status = 'parado');
+  }
+
   const minutesLastWelding = dateLastWelding.createdAt.getMinutes();
   const secondsLastWelding = dateLastWelding.createdAt.getSeconds();
 
@@ -112,6 +116,10 @@ async function sendInfoPrometeus02() {
   const seconds = new Date().getSeconds();
   const minutes = new Date().getMinutes();
 
+  if (!dateLastWelding) {
+    return (statusPrometus02.status = 'parado');
+  }
+
   const minutesLastWelding = dateLastWelding.createdAt.getMinutes();
   const secondsLastWelding = dateLastWelding.createdAt.getSeconds();
 
@@ -148,6 +156,10 @@ async function sendInfoPrometeus03() {
   });
   const seconds = new Date().getSeconds();
   const minutes = new Date().getMinutes();
+
+  if (!dateLastWelding) {
+    return (statusPrometus03.status = 'parado');
+  }
 
   const minutesLastWelding = dateLastWelding.createdAt.getMinutes();
   const secondsLastWelding = dateLastWelding.createdAt.getSeconds();
