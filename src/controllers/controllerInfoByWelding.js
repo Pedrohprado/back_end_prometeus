@@ -166,8 +166,10 @@ const findLastOperations = async (req, res) => {
         },
       },
     });
+    console.log(datas);
     const teste = sliceLastProcess(datas);
-    res.json(teste.reverse());
+    const all = teste.reverse().slice(0, 10);
+    res.json(all);
   } catch (error) {
     console.log(error);
     res.status(404).json({

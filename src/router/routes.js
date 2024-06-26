@@ -26,7 +26,7 @@ apiRouter.get('/prometeus/weldings/:id/:page/:pageSize', listSquadWeldin);
 apiRouter.get('/lastweldbead/:id', lastWeldBeadById);
 
 //this route get a lasts process i use for table in homepage
-apiRouter.get('/lastprocessweld/', findLastOperations);
+apiRouter.get('/lastprocessweld', findLastOperations);
 
 //rotas para verificar o controle de ciclo de serviço de cada prometeus
 apiRouter.get('/servicecycle/:id/:first/:last', getCicleWorkOrStop);
