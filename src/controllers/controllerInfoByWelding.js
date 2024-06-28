@@ -165,6 +165,7 @@ const findLastOperations = async (req, res) => {
           },
         },
       },
+      // take: Math.ceil((await prisma.welding.count()) / 4),
     });
     console.log(datas);
     const teste = sliceLastProcess(datas);

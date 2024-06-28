@@ -21,6 +21,7 @@ apiRouter.get('/allprocess', getAllProcess);
 //rotas para verificar soldas de cada processo
 apiRouter.get('/weldings/:id/:first/:last', findWelding);
 apiRouter.get('/specific/:id/:bead', findWeldinBead);
+//for monitoramente
 apiRouter.get('/prometeus/weldings/:id/:page/:pageSize', listSquadWeldin);
 //this route get a last bead by id, use for graph home
 apiRouter.get('/lastweldbead/:id', lastWeldBeadById);
