@@ -30,6 +30,6 @@ apiRouter.get('/lastweldbead/:id', lastWeldBeadById);
 apiRouter.get('/lastprocessweld', findLastOperations);
 
 //rotas para verificar o controle de ciclo de serviço de cada prometeus
-apiRouter.get('/servicecycle/:id/:first/:last', getCicleWorkOrStop);
+apiRouter.get('/servicecycle/:ids/:first/:last', getCicleWorkOrStop);
 
 module.exports = { apiRouter };

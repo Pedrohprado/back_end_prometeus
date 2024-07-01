@@ -11,32 +11,43 @@ const {
 const prisma = new PrismaClient();
 
 const getCicleWorkOrStop = async (req, res) => {
-  const { id, first, last } = req.params;
+  const { ids, first, last } = req.params;
 
-  const prometeus = await prisma.prometeus.findUnique({
-    where: {
-      id,
-    },
-  });
+  const idPrometeus = ids.split(',');
 
-  if (prometeus) {
-    const weldings = await prisma.welding.findMany({
+  const results = [];
+
+  for (const id of idPrometeus) {
+    const prometeus = await prisma.prometeus.findUnique({
       where: {
-        weldingId: prometeus.id,
-      },
-      orderBy: {
-        createdAt: 'asc',
+        id,
       },
     });
 
-    if (weldings) {
-      const weldingBetweenDate = getIntervalWelding(weldings, first, last);
-      const weldingBySquads = sliceSquadWeldings(weldingBetweenDate);
-      const reverseWelding = weldingBySquads.reverse();
-      const weldingCycle = someMinutesWorkorStopping(reverseWelding);
-      res.status(200).json(weldingCycle);
+    if (prometeus) {
+      const weldings = await prisma.welding.findMany({
+        where: {
+          weldingId: prometeus.id,
+        },
+        orderBy: {
+          createdAt: 'asc',
+        },
+      });
+
+      if (weldings.length > 0) {
+        const weldingBetweenDate = getIntervalWelding(weldings, first, last);
+        const weldingBySquads = sliceSquadWeldings(weldingBetweenDate);
+        const reverseWelding = weldingBySquads.reverse();
+        const weldingCycle = someMinutesWorkorStopping(reverseWelding);
+
+        results.push({
+          prometeus: prometeus.prometeusCode,
+          weldingCycle: weldingCycle,
+        });
+      }
     }
   }
+  res.status(200).json(results);
 };
 
 module.exports = {
