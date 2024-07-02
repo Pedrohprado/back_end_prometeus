@@ -16,7 +16,7 @@ app.use((req, res) => {
   res.status(404).json({ error: 'endpoint not fould' });
 });
 
-const teste = app.listen(8080, '172.31.98.228', () => {
+const teste = app.listen(8080, '10.20.2.79', () => {
   console.log('running!');
 });
 

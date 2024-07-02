@@ -63,7 +63,7 @@ let statusPrometus05 = {
 async function sendStatusPrometeus01() {
   const dateLastWelding = await prisma.welding.findFirst({
     where: {
-      weldingId: '9d39ef6a-7946-4e57-88ad-f12954d660aa',
+      weldingId: '07a52624-e212-4cac-bc62-226dce4fd4e6',
     },
     orderBy: {
       createdAt: 'desc',
@@ -107,7 +107,7 @@ async function sendStatusPrometeus01() {
 async function sendInfoPrometeus02() {
   const dateLastWelding = await prisma.welding.findFirst({
     where: {
-      weldingId: 'b0e8477f-ad1a-4b77-b6a7-d16cf9b31c2c',
+      weldingId: 'b709b4ea-b4b7-468a-b125-996ab8c94d00',
     },
     orderBy: {
       createdAt: 'desc',
@@ -148,7 +148,7 @@ async function sendInfoPrometeus02() {
 async function sendInfoPrometeus03() {
   const dateLastWelding = await prisma.welding.findFirst({
     where: {
-      weldingId: 'a0fcbc28-31e8-4040-b8dd-a914696a8141',
+      weldingId: 'afd803aa-5748-49fe-bda9-2f39e18c5eb9',
     },
     orderBy: {
       createdAt: 'desc',
@@ -167,22 +167,104 @@ async function sendInfoPrometeus03() {
   if (minutes === minutesLastWelding || minutes === minutesLastWelding + 1) {
     if (seconds === secondsLastWelding) {
       statusPrometus03.status = 'funcionando';
-      constAcumulate02 = 0;
+      constAcumulate03 = 0;
     } else {
       if (Math.abs(seconds - secondsLastWelding) <= 10) {
         statusPrometus03.status = 'funcionando';
 
-        constAcumulate02 = 0;
+        constAcumulate03 = 0;
       } else {
         statusPrometus03.status = 'parado';
 
-        constAcumulate02++;
+        constAcumulate03++;
       }
     }
   } else {
     statusPrometus03.status = 'parado';
 
-    constAcumulate02++;
+    constAcumulate03++;
+  }
+}
+
+async function sendInfoPrometeus04() {
+  const dateLastWelding = await prisma.welding.findFirst({
+    where: {
+      weldingId: 'a31bddfa-7051-4c73-a0e7-39eb0f3c9714',
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+  const seconds = new Date().getSeconds();
+  const minutes = new Date().getMinutes();
+
+  if (!dateLastWelding) {
+    return (statusPrometus04.status = 'parado');
+  }
+
+  const minutesLastWelding = dateLastWelding.createdAt.getMinutes();
+  const secondsLastWelding = dateLastWelding.createdAt.getSeconds();
+
+  if (minutes === minutesLastWelding || minutes === minutesLastWelding + 1) {
+    if (seconds === secondsLastWelding) {
+      statusPrometus04.status = 'funcionando';
+      constAcumulate04 = 0;
+    } else {
+      if (Math.abs(seconds - secondsLastWelding) <= 10) {
+        statusPrometus03.status = 'funcionando';
+
+        constAcumulate04 = 0;
+      } else {
+        statusPrometus04.status = 'parado';
+
+        constAcumulate04++;
+      }
+    }
+  } else {
+    statusPrometus04.status = 'parado';
+
+    constAcumulate04++;
+  }
+}
+
+async function sendInfoPrometeus05() {
+  const dateLastWelding = await prisma.welding.findFirst({
+    where: {
+      weldingId: '92c71ac7-1501-49e2-bf97-9a51aa300fc5',
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+  const seconds = new Date().getSeconds();
+  const minutes = new Date().getMinutes();
+
+  if (!dateLastWelding) {
+    return (statusPrometus05.status = 'parado');
+  }
+
+  const minutesLastWelding = dateLastWelding.createdAt.getMinutes();
+  const secondsLastWelding = dateLastWelding.createdAt.getSeconds();
+
+  if (minutes === minutesLastWelding || minutes === minutesLastWelding + 1) {
+    if (seconds === secondsLastWelding) {
+      statusPrometus05.status = 'funcionando';
+      constAcumulate05 = 0;
+    } else {
+      if (Math.abs(seconds - secondsLastWelding) <= 10) {
+        statusPrometus03.status = 'funcionando';
+
+        constAcumulate05 = 0;
+      } else {
+        statusPrometus05.status = 'parado';
+
+        constAcumulate05++;
+      }
+    }
+  } else {
+    statusPrometus05.status = 'parado';
+
+    constAcumulate05++;
   }
 }
 
@@ -190,6 +272,8 @@ function runAll() {
   sendStatusPrometeus01();
   sendInfoPrometeus02();
   sendInfoPrometeus03();
+  sendInfoPrometeus04();
+  sendInfoPrometeus05();
 
   let status = [];
   status.push(
