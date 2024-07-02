@@ -63,7 +63,7 @@ let statusPrometus05 = {
 async function sendStatusPrometeus01() {
   const dateLastWelding = await prisma.welding.findFirst({
     where: {
-      weldingId: '9d39ef6a-7946-4e57-88ad-f12954d660aa',
+      weldingId: process.env.IDPROMETEUS_01,
     },
     orderBy: {
       createdAt: 'desc',
@@ -107,7 +107,7 @@ async function sendStatusPrometeus01() {
 async function sendInfoPrometeus02() {
   const dateLastWelding = await prisma.welding.findFirst({
     where: {
-      weldingId: 'b0e8477f-ad1a-4b77-b6a7-d16cf9b31c2c',
+      weldingId: process.env.IDPROMETEUS_02,
     },
     orderBy: {
       createdAt: 'desc',
@@ -148,7 +148,7 @@ async function sendInfoPrometeus02() {
 async function sendInfoPrometeus03() {
   const dateLastWelding = await prisma.welding.findFirst({
     where: {
-      weldingId: 'a0fcbc28-31e8-4040-b8dd-a914696a8141',
+      weldingId: process.env.IDPROMETEUS_03,
     },
     orderBy: {
       createdAt: 'desc',
@@ -189,7 +189,7 @@ async function sendInfoPrometeus03() {
 async function sendInfoPrometeus04() {
   const dateLastWelding = await prisma.welding.findFirst({
     where: {
-      weldingId: '71ae6032-a3a8-4884-85a6-38ece295324c',
+      weldingId: process.env.IDPROMETEUS_04,
     },
     orderBy: {
       createdAt: 'desc',
@@ -230,7 +230,7 @@ async function sendInfoPrometeus04() {
 async function sendInfoPrometeus05() {
   const dateLastWelding = await prisma.welding.findFirst({
     where: {
-      weldingId: 'e88dd2ab-472d-49d1-a20f-f5b7ca007fb4',
+      weldingId: process.env.IDPROMETEUS_05,
     },
     orderBy: {
       createdAt: 'desc',
