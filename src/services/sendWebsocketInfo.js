@@ -99,7 +99,6 @@ async function sendStatusPrometeus01() {
 
     constAcumulate01++;
   }
-  console.log(constAcumulate01);
 
   // if (constAcumulate01 === 60) enviaEmail('Eric, Robô 01 parado mais de 1 minuto!');
 }
@@ -285,7 +284,7 @@ function runAll() {
   );
 
   broadcastMessage(status);
-  console.log(status);
+  // console.log(status);
 }
 
 module.exports = {

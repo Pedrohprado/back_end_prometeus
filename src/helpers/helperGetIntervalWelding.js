@@ -11,6 +11,17 @@ function getIntervalWelding(data, first, last) {
   return dataBetween;
 }
 
+function getWeldingToday(data, date) {
+  const today = new Date(date).toISOString().slice(0, 10);
+
+  const equals = data.filter((item) => {
+    const date = new Date(item.createdAt).toISOString().slice(0, 10);
+    return date === today;
+  });
+
+  return equals;
+}
+
 function sliceSquadWeldings(data) {
   let result = [];
 
@@ -118,6 +129,7 @@ function sliceLastProcess(data) {
 }
 
 module.exports = {
+  getWeldingToday,
   sliceLastProcess,
   getIntervalWelding,
   sliceSquadWeldings,

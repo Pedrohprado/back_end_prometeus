@@ -8,9 +8,11 @@ const {
   findWeldinBead,
   listSquadWeldin,
   lastWeldBeadById,
-  findLastOperations,
 } = require('../controllers/controllerInfoByWelding');
-const { getCicleWorkOrStop } = require('../controllers/controllerServiceCycle');
+const {
+  getCicleWorkOrStop,
+  getAllCicleWorkOrStop,
+} = require('../controllers/controllerServiceCycle');
 
 const apiRouter = express.Router();
 
@@ -24,10 +26,8 @@ apiRouter.get('/specific/:id/:bead', findWeldinBead);
 //for monitoramente
 apiRouter.get('/prometeus/weldings/:id/:page/:pageSize', listSquadWeldin);
 //this route get a last bead by id, use for graph home
-apiRouter.get('/lastweldbead/:id', lastWeldBeadById);
-
-//this route get a lasts process i use for table in homepage
-apiRouter.get('/lastprocessweld', findLastOperations);
+apiRouter.get('/lastweldbead/:ids', lastWeldBeadById);
+apiRouter.get('/lastcycle/:ids', getAllCicleWorkOrStop);
 
 //rotas para verificar o controle de ciclo de serviço de cada prometeus
 apiRouter.get('/servicecycle/:ids/:first/:last', getCicleWorkOrStop);

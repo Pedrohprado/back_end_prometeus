@@ -13,7 +13,6 @@ function initializeWebSocket(server) {
 
     ws.on('close', () => {
       console.log('Client disconnected from WebSocket');
-      //   clients.delete(ws);
     });
   });
 
@@ -31,7 +30,7 @@ function broadcastMessage(message) {
       client.send(jsonmessage);
     });
   } else {
-    console.log('Nenhum cliente conectado ou WebSocket não inicializado.');
+    // console.log('Nenhum cliente conectado ou WebSocket não inicializado.');
   }
 }
 

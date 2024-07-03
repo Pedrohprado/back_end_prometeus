@@ -17,7 +17,7 @@ app.use((req, res) => {
 });
 
 const teste = app.listen(8080, process.env.IP_SERVER, () => {
-  console.log('running!');
+  console.log(`${process.env.IP_SERVER}`);
 });
 
 initializeWebSocket(teste);
