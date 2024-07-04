@@ -12,6 +12,7 @@ const {
 const {
   getCicleWorkOrStop,
   getAllCicleWorkOrStop,
+  getGasConsumptionValues,
 } = require('../controllers/controllerServiceCycle');
 
 const apiRouter = express.Router();
@@ -31,5 +32,6 @@ apiRouter.get('/lastcycle/:ids', getAllCicleWorkOrStop);
 
 //rotas para verificar o controle de ciclo de serviço de cada prometeus
 apiRouter.get('/servicecycle/:ids/:first/:last', getCicleWorkOrStop);
+apiRouter.get('/gasconsumption/:ids/:first/:last', getGasConsumptionValues);
 
 module.exports = { apiRouter };

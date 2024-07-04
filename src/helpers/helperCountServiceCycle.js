@@ -44,6 +44,43 @@ function someForAllDevicesMinutesWorkorStopping(data) {
   return array;
 }
 
+function someForGasConsumption(data) {
+  const groupByDate = {};
+  const secondsToWorkInOneDay = 8 * 3600 + 56 * 60;
+  const secondsEffectiveCapacity = 7 * 3600 + 56 * 60;
+
+  data.forEach((item) => {
+    const date = new Date(item.tempoInicial).toISOString().split('T')[0];
+
+    if (!groupByDate[date]) {
+      groupByDate[date] = {
+        data: date,
+        quantidadeDeCordoesDeSolda: 0,
+        tempoTrabalhado: 0,
+      };
+    }
+
+    if (item.tempoDeArc) {
+      groupByDate[date].tempoTrabalhado += item.tempoDeArc;
+    } else {
+      groupByDate[date].tempoTrabalhado += 0;
+    }
+    groupByDate[date].quantidadeDeCordoesDeSolda++;
+  });
+
+  const array = Object.values(groupByDate);
+
+  array.forEach((item) => {
+    item.gastoComGasNoDia = +((item.tempoTrabalhado / 60) * 0.3).toFixed(2);
+    item.quantidadeEmLitroNoDia = +((item.tempoTrabalhado / 60) * 15).toFixed(
+      2
+    );
+    delete item.quantidadeDeCordoesDeSolda;
+    delete item.tempoTrabalhado;
+  });
+  return array;
+}
+
 function someMinutesWorkorStopping(data) {
   const groupByDate = {};
   const secondsToWorkInOneDay = 8 * 3600 + 56 * 60;
@@ -120,5 +157,6 @@ function someMinutesWorkorStopping(data) {
 
 module.exports = {
   someForAllDevicesMinutesWorkorStopping,
+  someForGasConsumption,
   someMinutesWorkorStopping,
 };
