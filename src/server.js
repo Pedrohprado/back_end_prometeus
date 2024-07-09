@@ -24,5 +24,7 @@ initializeWebSocket(teste);
 
 // return this fucntion when prometeus have datas
 setInterval(() => {
-  runAll();
+  if(new Date().getHours() >=5 && new Date().getHours() <= 16) {
+    runAll();
+  }
 }, 2000);

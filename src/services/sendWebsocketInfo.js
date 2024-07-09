@@ -9,8 +9,8 @@ const transport = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
   auth: {
-    user: 'pedrohprado26@gmail.com',
-    pass: 'qzvt vnnd nbfm zltx',
+    user: 'treinamento.ptr@gmail.com',
+    pass: 'htoa steq bpeg psrq',
   },
   tls: {
     rejectUnauthorized: false,
@@ -20,7 +20,7 @@ const transport = nodemailer.createTransport({
 const enviaEmail = async (mensage) => {
   const emailOptions = {
     from: 'mailtrap@demomailtrap.com',
-    to: ['eric.souza@ptractor.com.br'],
+    to: ['joelisson.garbim@ptractor.com.br'],
     subject: 'Status Robo',
     text: mensage,
   };
@@ -100,7 +100,11 @@ async function sendStatusPrometeus01() {
     constAcumulate01++;
   }
 
-  // if (constAcumulate01 === 60) enviaEmail('Eric, Robô 01 parado mais de 1 minuto!');
+  console.log(constAcumulate01)
+  if (constAcumulate01 === 900 && new Date().getHours() !== 11 && new Date().getHours() !== 12) {
+    enviaEmail('Robô-50 parado mais de 30 minutos, por favor verificar!');
+    // constAcumulate01 = 0
+  } 
 }
 
 async function sendInfoPrometeus02() {
@@ -142,6 +146,11 @@ async function sendInfoPrometeus02() {
 
     constAcumulate02++;
   }
+
+  if (constAcumulate02 === 900 && new Date().getHours() !== 11 && new Date().getHours() !== 12) {
+    enviaEmail('Robô-60 parado mais de 30 minutos, por favor verificar!');
+    // constAcumulate02 = 0
+  } 
 }
 
 async function sendInfoPrometeus03() {
@@ -183,6 +192,10 @@ async function sendInfoPrometeus03() {
 
     constAcumulate03++;
   }
+  if (constAcumulate03 === 900 && new Date().getHours() !== 11 && new Date().getHours() !== 12) {
+    enviaEmail('Robô-70 parado mais de 30 minutos, por favor verificar!');
+    // constAcumulate03 = 0
+  } 
 }
 
 async function sendInfoPrometeus04() {
@@ -224,6 +237,10 @@ async function sendInfoPrometeus04() {
 
     constAcumulate04++;
   }
+  if (constAcumulate04 === 900 && new Date().getHours() !== 11 && new Date().getHours() !== 12) {
+    enviaEmail('Robô-90 parado mais de 30 minutos, por favor verificar!');
+    // constAcumulate04 = 0
+  } 
 }
 
 async function sendInfoPrometeus05() {
@@ -265,6 +282,10 @@ async function sendInfoPrometeus05() {
 
     constAcumulate05++;
   }
+  if (constAcumulate05 === 900 && new Date().getHours() !== 11 && new Date().getHours() !== 12) {
+    enviaEmail('Robô-190 parado mais de 30 minutos, por favor verificar!');
+    // constAcumulate05 = 0
+  } 
 }
 
 function runAll() {
@@ -284,7 +305,6 @@ function runAll() {
   );
 
   broadcastMessage(status);
-  // console.log(status);
 }
 
 module.exports = {
