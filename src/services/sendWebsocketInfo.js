@@ -100,11 +100,15 @@ async function sendStatusPrometeus01() {
     constAcumulate01++;
   }
 
-  console.log(constAcumulate01)
-  if (constAcumulate01 === 900 && new Date().getHours() !== 11 && new Date().getHours() !== 12) {
+  console.log(constAcumulate01);
+  if (
+    constAcumulate01 === 900 &&
+    new Date().getHours() !== 11 &&
+    new Date().getHours() !== 12
+  ) {
     enviaEmail('Robô-50 parado mais de 30 minutos, por favor verificar!');
     // constAcumulate01 = 0
-  } 
+  }
 }
 
 async function sendInfoPrometeus02() {
@@ -147,10 +151,14 @@ async function sendInfoPrometeus02() {
     constAcumulate02++;
   }
 
-  if (constAcumulate02 === 900 && new Date().getHours() !== 11 && new Date().getHours() !== 12) {
+  if (
+    constAcumulate02 === 900 &&
+    new Date().getHours() !== 11 &&
+    new Date().getHours() !== 12
+  ) {
     enviaEmail('Robô-60 parado mais de 30 minutos, por favor verificar!');
     // constAcumulate02 = 0
-  } 
+  }
 }
 
 async function sendInfoPrometeus03() {
@@ -192,10 +200,14 @@ async function sendInfoPrometeus03() {
 
     constAcumulate03++;
   }
-  if (constAcumulate03 === 900 && new Date().getHours() !== 11 && new Date().getHours() !== 12) {
+  if (
+    constAcumulate03 === 900 &&
+    new Date().getHours() !== 11 &&
+    new Date().getHours() !== 12
+  ) {
     enviaEmail('Robô-70 parado mais de 30 minutos, por favor verificar!');
     // constAcumulate03 = 0
-  } 
+  }
 }
 
 async function sendInfoPrometeus04() {
@@ -237,10 +249,14 @@ async function sendInfoPrometeus04() {
 
     constAcumulate04++;
   }
-  if (constAcumulate04 === 900 && new Date().getHours() !== 11 && new Date().getHours() !== 12) {
+  if (
+    constAcumulate04 === 900 &&
+    new Date().getHours() !== 11 &&
+    new Date().getHours() !== 12
+  ) {
     enviaEmail('Robô-90 parado mais de 30 minutos, por favor verificar!');
     // constAcumulate04 = 0
-  } 
+  }
 }
 
 async function sendInfoPrometeus05() {
@@ -282,18 +298,22 @@ async function sendInfoPrometeus05() {
 
     constAcumulate05++;
   }
-  if (constAcumulate05 === 900 && new Date().getHours() !== 11 && new Date().getHours() !== 12) {
+  if (
+    constAcumulate05 === 900 &&
+    new Date().getHours() !== 11 &&
+    new Date().getHours() !== 12
+  ) {
     enviaEmail('Robô-190 parado mais de 30 minutos, por favor verificar!');
     // constAcumulate05 = 0
-  } 
+  }
 }
 
 function runAll() {
-  sendStatusPrometeus01();
-  sendInfoPrometeus02();
-  sendInfoPrometeus03();
-  sendInfoPrometeus04();
-  sendInfoPrometeus05();
+  // sendStatusPrometeus01();
+  // sendInfoPrometeus02();
+  // sendInfoPrometeus03();
+  // sendInfoPrometeus04();
+  // sendInfoPrometeus05();
 
   let status = [];
   status.push(

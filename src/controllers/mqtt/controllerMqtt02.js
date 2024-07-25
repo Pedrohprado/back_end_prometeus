@@ -15,6 +15,7 @@ let prismaPrometeus;
 
 client.on('connect', async () => {
   await loadPrometeusData();
+  console.log('how many times?');
   client.subscribe(topics);
 });
 

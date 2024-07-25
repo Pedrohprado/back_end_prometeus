@@ -2,6 +2,8 @@ const express = require('express');
 const {
   createdNewProcess,
   getAllProcess,
+  getProcessById,
+  updateProcess,
 } = require('../controllers/controllerNewProccess');
 const {
   findWelding,
@@ -14,12 +16,17 @@ const {
   getAllCicleWorkOrStop,
   getGasConsumptionValues,
 } = require('../controllers/controllerServiceCycle');
+const { routerStopAnalysis } = require('./stopanalysis');
 
 const apiRouter = express.Router();
+
+apiRouter.use('/whystop', routerStopAnalysis);
 
 //rotas para verificar e criar novos processos
 apiRouter.post('/newprocess', createdNewProcess);
 apiRouter.get('/allprocess', getAllProcess);
+apiRouter.get('/findprometeus/:idPrometeus', getProcessById);
+apiRouter.put('/updateprometeus/:idPrometeus', updateProcess);
 
 //rotas para verificar soldas de cada processo
 apiRouter.get('/weldings/:id/:first/:last', findWelding);
