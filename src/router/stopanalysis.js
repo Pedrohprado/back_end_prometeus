@@ -7,6 +7,7 @@ const {
 const routerStopAnalysis = express.Router();
 
 routerStopAnalysis.post('/registerstop/:idPrometeus', createWhyProcessStop);
+
 routerStopAnalysis.get(
   '/inforeasonsstop/:idPrometeus/:firstDate/:lastDate',
   reasonsForStopping

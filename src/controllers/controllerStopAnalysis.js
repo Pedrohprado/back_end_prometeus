@@ -40,6 +40,7 @@ const reasonsForStopping = async (req, res) => {
   try {
     const { idPrometeus, firstDate, lastDate } = req.params;
 
+    //i use +1 for adquire a correct date, because if i remove +1 the function dont get interval
     const data = new Date(lastDate);
     data.setDate(data.getDate() + 1);
 
