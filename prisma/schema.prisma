@@ -8,20 +8,23 @@ datasource db {
 }
 
 model Prometeus {
-    id              String    @id @default(uuid())
+    id              String   @id @default(uuid())
     prometeusCode   String
     soldador        String
+    robo            String?
     cartao          Int
     setor           Int
     gas             String
     vazaoDoGas      String
     diametroArame   String
     velocidadeArame String
+    status          String?
     localizationRow Int?
     localizationCol Int?
-    Welding         Welding[]
-    createdAt       DateTime  @default(now())
-    Status          Status[]
+    createdAt       DateTime @default(now())
+
+    Welding Welding[]
+    Status  StopAnalysis[]
 }
 
 model Welding {
@@ -33,12 +36,13 @@ model Welding {
     prometeus Prometeus @relation(fields: [weldingId], references: [id])
 }
 
-model Status {
-    id          String    @id @default(uuid())
-    status      String
-    tempo       Int
-    prometeusId String    @unique
-    createdAt   DateTime  @default(now())
-    updateAt    DateTime  @updatedAt
+model StopAnalysis {
+    id             Int      @id @default(autoincrement())
+    status         String
+    motivoDaParada String
+    createdAt      DateTime @default(now())
+    updateAt       DateTime @updatedAt
+
+    prometeusId String
     prometeus   Prometeus @relation(fields: [prometeusId], references: [id])
 }
