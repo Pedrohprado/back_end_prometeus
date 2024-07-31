@@ -35,13 +35,13 @@ const lastWeldBeadById = async (req, res) => {
               capture: specific.capture,
             },
             orderBy: {
-              createdAt: 'desc',
+              createdAt: 'asc',
             },
           });
 
           result.push({
             prometeus: prometeus.prometeusCode,
-            lastWelding: beadweld.reverse(),
+            lastWelding: beadweld,
           });
         }
       }
