@@ -151,7 +151,6 @@ function someMinutesWorkorStopping(data) {
 
   const geralValues = [total];
 
-  console.log([array, geralValues]);
   return [array, geralValues];
 }
 

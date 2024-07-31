@@ -1,7 +1,6 @@
 const { prisma } = require('../services/prisma');
 
 const {
-  getIntervalWelding,
   sliceSquadWeldings,
   getWeldingToday,
 } = require('../helpers/helperGetIntervalWelding');
@@ -62,6 +61,12 @@ const getGasConsumptionValues = async (req, res) => {
   try {
     const { ids, first, last } = req.params;
 
+    const data = new Date(last);
+    data.setDate(data.getDate() + 1);
+
+    const firstDate = new Date(first).toISOString();
+    const lastDate = data.toISOString();
+
     const idPrometeus = ids.split(',');
 
     const results = [];
@@ -77,6 +82,11 @@ const getGasConsumptionValues = async (req, res) => {
         const weldings = await prisma.welding.findMany({
           where: {
             weldingId: prometeus.id,
+
+            createdAt: {
+              gte: firstDate,
+              lte: lastDate,
+            },
           },
           orderBy: {
             createdAt: 'asc',
@@ -84,8 +94,7 @@ const getGasConsumptionValues = async (req, res) => {
         });
 
         if (weldings.length > 0) {
-          const weldingBetweenDate = getIntervalWelding(weldings, first, last);
-          const weldingBySquads = sliceSquadWeldings(weldingBetweenDate);
+          const weldingBySquads = sliceSquadWeldings(weldings);
           const reverseWelding = weldingBySquads.reverse();
           const gasValues = someForGasConsumption(reverseWelding);
 
@@ -110,6 +119,12 @@ const getCicleWorkOrStop = async (req, res) => {
   try {
     const { ids, first, last } = req.params;
 
+    const data = new Date(last);
+    data.setDate(data.getDate() + 1);
+
+    const firstDate = new Date(first).toISOString();
+    const lastDate = data.toISOString();
+
     const idPrometeus = ids.split(',');
 
     const results = [];
@@ -125,6 +140,10 @@ const getCicleWorkOrStop = async (req, res) => {
         const weldings = await prisma.welding.findMany({
           where: {
             weldingId: prometeus.id,
+            createdAt: {
+              gte: firstDate,
+              lte: lastDate,
+            },
           },
           orderBy: {
             createdAt: 'asc',
@@ -132,8 +151,7 @@ const getCicleWorkOrStop = async (req, res) => {
         });
 
         if (weldings.length > 0) {
-          const weldingBetweenDate = getIntervalWelding(weldings, first, last);
-          const weldingBySquads = sliceSquadWeldings(weldingBetweenDate);
+          const weldingBySquads = sliceSquadWeldings(weldings);
           const reverseWelding = weldingBySquads.reverse();
           const weldingCycle = someMinutesWorkorStopping(reverseWelding);
 
@@ -144,7 +162,6 @@ const getCicleWorkOrStop = async (req, res) => {
         }
       }
     }
-    console.log(results);
 
     res.status(200).json(results);
   } catch (error) {
