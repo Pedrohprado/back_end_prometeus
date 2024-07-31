@@ -16,7 +16,7 @@ app.use((req, res) => {
   res.status(404).json({ error: 'endpoint not fould' });
 });
 
-const teste = app.listen(8080, process.env.IP_SERVER, () => {
+const teste = app.listen(9090, process.env.IP_SERVER, () => {
   console.log('running!');
 });
 
@@ -24,7 +24,7 @@ initializeWebSocket(teste);
 
 // return this fucntion when prometeus have datas
 setInterval(() => {
-  if(new Date().getHours() >=5 && new Date().getHours() <= 16) {
+  if (new Date().getHours() >= 5 && new Date().getHours() <= 16) {
     runAll();
   }
 }, 2000);
