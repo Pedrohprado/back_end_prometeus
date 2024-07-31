@@ -16,7 +16,7 @@ app.use((req, res) => {
   res.status(404).json({ error: 'endpoint not fould' });
 });
 
-const teste = app.listen(8080, process.env.IP_SERVER, () => {
+const teste = app.listen(process.env.PORT, process.env.IP_SERVER, () => {
   console.log('running!');
 });
 
