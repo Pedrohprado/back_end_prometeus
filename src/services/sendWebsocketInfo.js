@@ -9,8 +9,8 @@ const transport = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
   auth: {
-    user: 'pedrohprado26@gmail.com',
-    pass: 'qzvt vnnd nbfm zltx',
+    user: 'treinamento.ptr@gmail.com',
+    pass: 'htoa steq bpeg psrq',
   },
   tls: {
     rejectUnauthorized: false,
@@ -20,7 +20,7 @@ const transport = nodemailer.createTransport({
 const enviaEmail = async (mensage) => {
   const emailOptions = {
     from: 'mailtrap@demomailtrap.com',
-    to: ['eric.souza@ptractor.com.br'],
+    to: ['joelisson.garbim@ptractor.com.br'],
     subject: 'Status Robo',
     text: mensage,
   };
@@ -63,7 +63,7 @@ let statusPrometus05 = {
 async function sendStatusPrometeus01() {
   const dateLastWelding = await prisma.welding.findFirst({
     where: {
-      weldingId: '9d39ef6a-7946-4e57-88ad-f12954d660aa',
+      weldingId: process.env.IDPROMETEUS_01,
     },
     orderBy: {
       createdAt: 'desc',
@@ -99,15 +99,22 @@ async function sendStatusPrometeus01() {
 
     constAcumulate01++;
   }
-  console.log(constAcumulate01);
 
-  // if (constAcumulate01 === 60) enviaEmail('Eric, Robô 01 parado mais de 1 minuto!');
+  console.log(constAcumulate01);
+  if (
+    constAcumulate01 === 900 &&
+    new Date().getHours() !== 11 &&
+    new Date().getHours() !== 12
+  ) {
+    enviaEmail('Robô-50 parado mais de 30 minutos, por favor verificar!');
+    // constAcumulate01 = 0
+  }
 }
 
 async function sendInfoPrometeus02() {
   const dateLastWelding = await prisma.welding.findFirst({
     where: {
-      weldingId: 'b0e8477f-ad1a-4b77-b6a7-d16cf9b31c2c',
+      weldingId: process.env.IDPROMETEUS_02,
     },
     orderBy: {
       createdAt: 'desc',
@@ -143,12 +150,21 @@ async function sendInfoPrometeus02() {
 
     constAcumulate02++;
   }
+
+  if (
+    constAcumulate02 === 900 &&
+    new Date().getHours() !== 11 &&
+    new Date().getHours() !== 12
+  ) {
+    enviaEmail('Robô-60 parado mais de 30 minutos, por favor verificar!');
+    // constAcumulate02 = 0
+  }
 }
 
 async function sendInfoPrometeus03() {
   const dateLastWelding = await prisma.welding.findFirst({
     where: {
-      weldingId: 'a0fcbc28-31e8-4040-b8dd-a914696a8141',
+      weldingId: process.env.IDPROMETEUS_03,
     },
     orderBy: {
       createdAt: 'desc',
@@ -167,29 +183,137 @@ async function sendInfoPrometeus03() {
   if (minutes === minutesLastWelding || minutes === minutesLastWelding + 1) {
     if (seconds === secondsLastWelding) {
       statusPrometus03.status = 'funcionando';
-      constAcumulate02 = 0;
+      constAcumulate03 = 0;
     } else {
       if (Math.abs(seconds - secondsLastWelding) <= 10) {
         statusPrometus03.status = 'funcionando';
 
-        constAcumulate02 = 0;
+        constAcumulate03 = 0;
       } else {
         statusPrometus03.status = 'parado';
 
-        constAcumulate02++;
+        constAcumulate03++;
       }
     }
   } else {
     statusPrometus03.status = 'parado';
 
-    constAcumulate02++;
+    constAcumulate03++;
+  }
+  if (
+    constAcumulate03 === 900 &&
+    new Date().getHours() !== 11 &&
+    new Date().getHours() !== 12
+  ) {
+    enviaEmail('Robô-70 parado mais de 30 minutos, por favor verificar!');
+    // constAcumulate03 = 0
+  }
+}
+
+async function sendInfoPrometeus04() {
+  const dateLastWelding = await prisma.welding.findFirst({
+    where: {
+      weldingId: process.env.IDPROMETEUS_04,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+  const seconds = new Date().getSeconds();
+  const minutes = new Date().getMinutes();
+
+  if (!dateLastWelding) {
+    return (statusPrometus04.status = 'parado');
+  }
+
+  const minutesLastWelding = dateLastWelding.createdAt.getMinutes();
+  const secondsLastWelding = dateLastWelding.createdAt.getSeconds();
+
+  if (minutes === minutesLastWelding || minutes === minutesLastWelding + 1) {
+    if (seconds === secondsLastWelding) {
+      statusPrometus04.status = 'funcionando';
+      constAcumulate04 = 0;
+    } else {
+      if (Math.abs(seconds - secondsLastWelding) <= 10) {
+        statusPrometus03.status = 'funcionando';
+
+        constAcumulate04 = 0;
+      } else {
+        statusPrometus04.status = 'parado';
+
+        constAcumulate04++;
+      }
+    }
+  } else {
+    statusPrometus04.status = 'parado';
+
+    constAcumulate04++;
+  }
+  if (
+    constAcumulate04 === 900 &&
+    new Date().getHours() !== 11 &&
+    new Date().getHours() !== 12
+  ) {
+    enviaEmail('Robô-90 parado mais de 30 minutos, por favor verificar!');
+    // constAcumulate04 = 0
+  }
+}
+
+async function sendInfoPrometeus05() {
+  const dateLastWelding = await prisma.welding.findFirst({
+    where: {
+      weldingId: process.env.IDPROMETEUS_05,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+  const seconds = new Date().getSeconds();
+  const minutes = new Date().getMinutes();
+
+  if (!dateLastWelding) {
+    return (statusPrometus05.status = 'parado');
+  }
+
+  const minutesLastWelding = dateLastWelding.createdAt.getMinutes();
+  const secondsLastWelding = dateLastWelding.createdAt.getSeconds();
+
+  if (minutes === minutesLastWelding || minutes === minutesLastWelding + 1) {
+    if (seconds === secondsLastWelding) {
+      statusPrometus05.status = 'funcionando';
+      constAcumulate05 = 0;
+    } else {
+      if (Math.abs(seconds - secondsLastWelding) <= 10) {
+        statusPrometus03.status = 'funcionando';
+
+        constAcumulate05 = 0;
+      } else {
+        statusPrometus05.status = 'parado';
+
+        constAcumulate05++;
+      }
+    }
+  } else {
+    statusPrometus05.status = 'parado';
+
+    constAcumulate05++;
+  }
+  if (
+    constAcumulate05 === 900 &&
+    new Date().getHours() !== 11 &&
+    new Date().getHours() !== 12
+  ) {
+    enviaEmail('Robô-190 parado mais de 30 minutos, por favor verificar!');
+    // constAcumulate05 = 0
   }
 }
 
 function runAll() {
-  sendStatusPrometeus01();
-  sendInfoPrometeus02();
-  sendInfoPrometeus03();
+  // sendStatusPrometeus01();
+  // sendInfoPrometeus02();
+  // sendInfoPrometeus03();
+  // sendInfoPrometeus04();
+  // sendInfoPrometeus05();
 
   let status = [];
   status.push(
@@ -201,7 +325,6 @@ function runAll() {
   );
 
   broadcastMessage(status);
-  console.log(status);
 }
 
 module.exports = {

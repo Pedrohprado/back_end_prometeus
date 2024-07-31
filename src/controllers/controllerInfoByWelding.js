@@ -2,16 +2,19 @@ const { PrismaClient } = require('@prisma/client');
 const {
   getIntervalWelding,
   sliceSquadWeldings,
-  sliceLastProcess,
 } = require('../helpers/helperGetIntervalWelding');
 
 const prisma = new PrismaClient();
 
 const lastWeldBeadById = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { ids } = req.params;
 
-    if (id) {
+    const idPrometeus = ids.split(',');
+
+    const result = [];
+
+    for (const id of idPrometeus) {
       const prometeus = await prisma.prometeus.findUnique({
         where: { id },
       });
@@ -26,8 +29,6 @@ const lastWeldBeadById = async (req, res) => {
           },
         });
 
-        console.log(specific);
-
         if (specific) {
           const beadweld = await prisma.welding.findMany({
             where: {
@@ -38,12 +39,14 @@ const lastWeldBeadById = async (req, res) => {
             },
           });
 
-          console.log(beadweld);
-
-          res.status(200).json(beadweld.reverse());
+          result.push({
+            prometeus: prometeus.prometeusCode,
+            lastWelding: beadweld.reverse(),
+          });
         }
       }
     }
+    res.status(200).json(result);
   } catch (error) {
     console.log(error);
     res.status(404).json({
@@ -145,42 +148,7 @@ const findWelding = async (req, res) => {
   }
 };
 
-const findLastOperations = async (req, res) => {
-  try {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const datas = await prisma.welding.findMany({
-      where: {
-        createdAt: {
-          gte: today,
-        },
-      },
-      orderBy: {
-        createdAt: 'asc',
-      },
-      include: {
-        prometeus: {
-          select: {
-            prometeusCode: true,
-          },
-        },
-      },
-      // take: Math.ceil((await prisma.welding.count()) / 4),
-    });
-    console.log(datas);
-    const teste = sliceLastProcess(datas);
-    const all = teste.reverse().slice(0, 10);
-    res.json(all);
-  } catch (error) {
-    console.log(error);
-    res.status(404).json({
-      error: 'erro interno no servidor',
-    });
-  }
-};
-
 module.exports = {
-  findLastOperations,
   lastWeldBeadById,
   listSquadWeldin,
   findWeldinBead,
