@@ -1,8 +1,6 @@
 const { broadcastMessage } = require('./websocketService');
-const { PrismaClient } = require('@prisma/client');
 const nodemailer = require('nodemailer');
-
-const prisma = new PrismaClient();
+const { prisma } = require('../services/prisma');
 
 const transport = nodemailer.createTransport({
   service: 'gmail',

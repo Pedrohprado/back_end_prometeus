@@ -1,10 +1,9 @@
-const { PrismaClient } = require('@prisma/client');
+const { prisma } = require('../services/prisma');
+
 const {
   getIntervalWelding,
   sliceSquadWeldings,
 } = require('../helpers/helperGetIntervalWelding');
-
-const prisma = new PrismaClient();
 
 const lastWeldBeadById = async (req, res) => {
   try {

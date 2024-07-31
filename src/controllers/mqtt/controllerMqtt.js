@@ -1,8 +1,7 @@
 const mqtt = require('mqtt');
-const { PrismaClient } = require('@prisma/client');
 const { v4: uuiddv4 } = require('uuid');
+const { prisma } = require('../../services/prisma');
 
-const prisma = new PrismaClient();
 const client = mqtt.connect(process.env.MQTT_CONNECT);
 
 const topics = ['prometeusNewSensorId01'];

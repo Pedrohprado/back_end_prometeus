@@ -1,7 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
 const { calculateTest } = require('../helpers/calculateStopAnalyses');
-
-const prisma = new PrismaClient();
+const { prisma } = require('../services/prisma');
 
 const createWhyProcessStop = async (req, res) => {
   try {

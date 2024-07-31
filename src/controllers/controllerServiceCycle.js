@@ -1,4 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
+const { prisma } = require('../services/prisma');
+
 const {
   getIntervalWelding,
   sliceSquadWeldings,
@@ -10,8 +11,6 @@ const {
   someForAllDevicesMinutesWorkorStopping,
   someForGasConsumption,
 } = require('../helpers/helperCountServiceCycle');
-
-const prisma = new PrismaClient();
 
 const getAllCicleWorkOrStop = async (req, res) => {
   try {
