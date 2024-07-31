@@ -1,10 +1,6 @@
-const { PrismaClient } = require('@prisma/client');
-const {
-  getIntervalWelding,
-  sliceSquadWeldings,
-} = require('../helpers/helperGetIntervalWelding');
+const { prisma } = require('../services/prisma');
 
-const prisma = new PrismaClient();
+const { sliceSquadWeldings } = require('../helpers/helperGetIntervalWelding');
 
 const lastWeldBeadById = async (req, res) => {
   try {
@@ -125,6 +121,13 @@ const findWeldinBead = async (req, res) => {
 const findWelding = async (req, res) => {
   try {
     const { id, first, last } = req.params;
+
+    const data = new Date(last);
+    data.setDate(data.getDate() + 1);
+
+    const firstDate = new Date(first).toISOString();
+    const lastDate = data.toISOString();
+
     const process = await prisma.prometeus.findUnique({
       where: { id },
     });
@@ -133,12 +136,15 @@ const findWelding = async (req, res) => {
       const welding = await prisma.welding.findMany({
         where: {
           weldingId: process.id,
+
+          createdAt: {
+            gte: firstDate,
+            lte: lastDate,
+          },
         },
       });
 
-      const interval = getIntervalWelding(welding, first, last);
-
-      if (interval) res.status(200).json(interval);
+      if (welding) res.status(200).json(interval);
     }
   } catch (error) {
     console.log(error);
