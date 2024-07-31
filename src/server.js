@@ -1,8 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const { apiRouter } = require('./router/routes');
-const { initializeWebSocket } = require('./services/websocketService');
-const { runAll } = require('./services/sendWebsocketInfo');
 
 const app = express();
 
@@ -19,12 +17,3 @@ app.use((req, res) => {
 const teste = app.listen(7777, process.env.IP_SERVER, () => {
   console.log('running!');
 });
-
-initializeWebSocket(teste);
-
-// return this fucntion when prometeus have datas
-setInterval(() => {
-  if (new Date().getHours() >= 5 && new Date().getHours() <= 16) {
-    runAll();
-  }
-}, 2000);
