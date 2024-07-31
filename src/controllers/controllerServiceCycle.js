@@ -157,7 +157,7 @@ const getCicleWorkOrStop = async (req, res) => {
 
           results.push({
             prometeus: prometeus.prometeusCode,
-            weldingCycle: weldingCycle,
+            weldingCycle,
           });
         }
       }
